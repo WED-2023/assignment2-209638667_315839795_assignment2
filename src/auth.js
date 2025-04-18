@@ -24,8 +24,8 @@ const screens = {
   // --- SIGN UP ---
   document.getElementById('signup_form').addEventListener('submit', (e) => {
     e.preventDefault();
-    const username = document.getElementById('username').value;
-    const password = document.getElementById('password').value;
+    const username = document.getElementById('signup_username').value;
+    const password = document.getElementById('signup_password').value;
     const confirm = document.getElementById('confirm_password').value;
     const firstName = document.getElementById('first_name').value;
     const lastName = document.getElementById('last_name').value;
@@ -48,13 +48,14 @@ const screens = {
   // --- LOGIN ---
   document.getElementById('login_form').addEventListener('submit', (e) => {
     e.preventDefault();
-    const username = document.querySelector('#login_form #username').value;
-    const password = document.querySelector('#login_form #password').value;
+    const username = document.getElementById('login_username').value;
+    const password = document.getElementById('login_password').value;
   
     const user = users.find(u => u.username === username && u.password === password);
     if (!user) {
-      alert('Invalid credentials.');
-      return;
+    console.log('Login failed:', username, password); // 👈 TEMP test log
+    alert('Invalid credentials.');
+    return;
     }
   
     // Login success
