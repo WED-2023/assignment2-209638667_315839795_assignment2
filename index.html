@@ -12,9 +12,14 @@
             <img src="assets/spaceship_header.svg" alt="Spaceships Logo" id="logo">
             <h1>Spaceships</h1>
         </div>
-        <div id="menu">
-
-        </div>
+        <nav id="menu" class="hidden">
+            <ul>
+                <!--TODO remove bullets-->
+                <li><button id="menu_config">Configuration</button></li>
+                <li><button id="menu_about">About</button></li>
+                <li><button id="menu_logout">Logout</button></li>
+            </ul>
+        </nav>
         <div id="content">
             <div id="welcome">
                 <p>This spaceships game website was created by: </p>
@@ -53,16 +58,39 @@
                     <button type="submit">Login</button>
                 </form>
             </div>
-            <div id="config_screen">
+            <div id="config_screen" class="hidden">
+                <h2>Game Configuration</h2>
+                <form id="config_form">
+                    <!-- Shooting key selection -->
+                    <label for="shoot_key">Choose your shooting key:</label>
+                    <div id="shoot_key_display">Not set</div>
+                    <button type="button" id="set_shoot_key_btn">Press a key</button>
+                    <input type="hidden" id="shoot_key" name="shoot_key" required>
 
+            
+                    <!-- Game duration -->
+                    <label for="game_time">Game duration (in minutes):</label>
+                    <input type="number" id="game_time" name="game_time" min="2" max="20" required>
+            
+                    <!-- Spaceship color -->
+                    <label for="ship_color">Choose your spaceship color:</label>
+                    <input type="color" id="ship_color" name="ship_color" value="#00ff00">
+            
+                    <!-- Start button -->
+                    <button type="submit">Start Game</button>
+                </form>
             </div>
             <div id="game_screen">
                 </div>
         </div>
         <div id="footer">
-            </div>
+            <hr>
+            <p>Spaceships Game Project - Web Development course assignment2</p>
+            <p>Created by: Tomer Rothman (315839795), May-tal Wexler Rothman (209638667)</p>
+            <p>Contact: <a href="mailto:rothtom@post.bgu.ac.il">rothtom@post.bgu.ac.il</a> | <a href="mailto:maytalw@post.bgu.ac.il">maytalw@post.bgu.ac.il</a></p>
+        </div>
         <div id="about" class="modal hidden">
-
+            
         </div>
     </div>
 </body>
