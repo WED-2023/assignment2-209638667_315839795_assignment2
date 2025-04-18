@@ -8,9 +8,7 @@ body{
   line-height: 1.6;
 }
 
-.hidden {
-  display: none;
-}
+
 
 /* Header Container */
 #header {
@@ -105,3 +103,6 @@ body{
   text-shadow: 0 0 5px #00e5ff;
 }
 
+.hidden {
+  display: none;
+}
