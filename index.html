@@ -89,13 +89,21 @@
                     <button type="submit">Start Game</button>
                 </form>
             </div>
-            <div id="game_screen"  class="hidden">
+            <div id="game_screen" class="hidden">
+                <div id="game_info">
+                  <span id="score">Score: 0</span>
+                  <span id="lives">Lives: 3</span>
+                  <span id="timer">Time: 00:00</span>
                 </div>
+                <div id="game_area">
+                  <!-- Ships and bullets will be added dynamically via JS -->
+                  <img id="player_ship" src="assets/player_ship.svg" alt="Player Ship">
+                </div>
+              </div>
         </div>
         <div id="footer">
             <hr>
             <p>Spaceships Game Project - Web Development course assignment2</p>
-            <p>Created by: Tomer Rothman (315839795), May-tal Wexler Rothman (209638667)</p>
             <p>Contact: <a href="mailto:rothtom@post.bgu.ac.il">rothtom@post.bgu.ac.il</a> | <a href="mailto:maytalw@post.bgu.ac.il">maytalw@post.bgu.ac.il</a></p>
         </div>
         <div id="about" class="modal hidden">
