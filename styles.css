@@ -1,0 +1,58 @@
+body{
+  margin: 0;
+  padding: 0;
+  font-family: 'Space Mono', monospace; /* Add this font from Google Fonts */
+  background-color: #0a0f1f; /* deep space black-blue */
+  color: #ffffff; /* white text for contrast */
+  line-height: 1.6;
+}
+/* Header Container */
+#header {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: #0a0f1f; /* deep space black-blue */
+  padding: 30px 20px;
+  gap: 20px; /* space between logo and title */
+  border-bottom: 2px solid #00e5ff;
+  box-shadow: 0 4px 10px rgba(0, 229, 255, 0.2);
+}
+
+/* Logo Styling */
+#logo {
+  height: 200px; /* make it bigger */
+  width: auto;
+}
+
+/* Title Text Styling */
+#header h1 {
+  margin: 0;
+  color: #ffffff;
+  font-size: 2.5rem;
+  font-weight: bold;
+  text-shadow: 0 0 10px #00e5ff; /* neon glow */
+}
+
+.space-mono-regular {
+  font-family: "Space Mono", monospace;
+  font-weight: 400;
+  font-style: normal;
+}
+
+.space-mono-bold {
+  font-family: "Space Mono", monospace;
+  font-weight: 700;
+  font-style: normal;
+}
+
+.space-mono-regular-italic {
+  font-family: "Space Mono", monospace;
+  font-weight: 400;
+  font-style: italic;
+}
+
+.space-mono-bold-italic {
+  font-family: "Space Mono", monospace;
+  font-weight: 700;
+  font-style: italic;
+}
