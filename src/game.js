@@ -19,9 +19,12 @@ let isGameOver = false;
 
 
 export function initGame(cfg) {
-  config = cfg;
-  playerShip = document.getElementById('player_ship');
-  gameArea = document.getElementById('game_area');
+    config = cfg;
+    isGameOver = false;
+  
+    // ✅ Get fresh references after game area is reset
+    gameArea = document.getElementById('game_area');
+    playerShip = document.getElementById('player_ship');
 
   // Reset stats
   score = 0;
@@ -280,20 +283,66 @@ function startAlienShooting() {
     }, 800); // check every 0.8s for possible shot
   }
 
-function endGame(reason) {
+  function endGame(reason) {
     isGameOver = true;
     clearInterval(gameTimer);
     clearInterval(alienMoveInterval);
   
+    const messageEl = document.getElementById('game_result_message');
+    const scoreEl = document.getElementById('final_score');
+    const historyEl = document.getElementById('score_history');
+  
     let message = '';
     if (reason === 'time') {
-      message = score < 100 ? `You can do better! Score: ${score}` : 'Winner!';
+      message = score < 100 ? `You can do better!` : 'Winner!';
     } else if (reason === 'win') {
       message = 'Champion!';
-    } 
-    else if (reason === 'lose') {
-        message = 'You Lost!';
+    } else {
+      message = 'You Lost!';
     }
   
-    alert(message);
+    messageEl.textContent = message;
+    scoreEl.textContent = score;
+  
+    // Add to history
+    const key = `score_history_${currentUser}`;
+    const history = JSON.parse(localStorage.getItem(key)) || [];
+    history.push(score);
+
+    // ✅ Sort descending before storing
+    history.sort((a, b) => b - a);
+    localStorage.setItem(key, JSON.stringify(history));
+
+    // ✅ Display top 10
+    historyEl.innerHTML = '';
+    history.slice(0, 10).forEach(s => {
+    const li = document.createElement('li');
+    li.textContent = `Score: ${s}`;
+    historyEl.appendChild(li);
+    });
+  
+    // Display history
+    historyEl.innerHTML = '';
+    [...history].reverse().slice(0, 10).forEach(s => {
+      const li = document.createElement('li');
+      li.textContent = `Score: ${s}`;
+      historyEl.appendChild(li);
+    });
+  
+    // Hide game, show end screen
+    document.getElementById('game_screen').classList.add('hidden');
+    document.getElementById('game_over_screen').classList.remove('hidden');
   }
+  // --- New Game Button ---
+  document.getElementById('new_game_button').addEventListener('click', () => {
+    // Hide the game over screen and show the config screen
+    document.getElementById('game_over_screen').classList.add('hidden');
+    document.getElementById('config_screen').classList.remove('hidden');
+  
+    // Reset the game area: remove all bullets, aliens, etc., and re-add the player ship
+    document.getElementById('game_area').innerHTML = 
+    `<img id="player_ship" src="assets/player_ship.svg" alt="Player Ship">`;
+  
+    // Reset internal flags just in case
+    window.gameConfig = null;
+  });

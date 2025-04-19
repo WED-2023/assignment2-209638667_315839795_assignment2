@@ -53,14 +53,16 @@ const screens = {
   
     const user = users.find(u => u.username === username && u.password === password);
     if (!user) {
-    console.log('Login failed:', username, password); // 👈 TEMP test log
-    alert('Invalid credentials.');
-    return;
+      alert('Invalid credentials.');
+      return;
     }
   
-    // Login success
-    console.log('User logged in:', username);
-    screens.menu.classList.remove('hidden');
+    // ✅ Reset history for new user
+    window.loggedInUser = username;
+    const key = `score_history_${username}`;
+    localStorage.setItem(key, JSON.stringify([])); // Clear history on login
+  
+    document.getElementById('menu').classList.remove('hidden');
     showScreen('config');
   });
   
