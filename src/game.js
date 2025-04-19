@@ -116,7 +116,7 @@ function startTimer() {
   }
   function firePlayerBullet() {
     const bullet = document.createElement('img');
-    bullet.src = 'assets/heart-svgrepo-com.svg';
+    bullet.src = 'assets/player_shot.svg';
     bullet.className = 'player_bullet';
     bullet.style.position = 'absolute';
     bullet.style.left = `${playerShip.offsetLeft + playerShip.offsetWidth / 2 - 5}px`;
@@ -236,7 +236,7 @@ function startAlienShooting() {
   
       const randomAlien = aliens[Math.floor(Math.random() * aliens.length)];
       const bullet = document.createElement('img');
-      bullet.src = 'assets/alien-gray-junk-svgrepo-com.svg';
+      bullet.src = 'assets/alien_shot.svg';
       bullet.className = 'enemy_bullet';
       bullet.style.position = 'absolute';
       bullet.style.width = '15px';
@@ -305,7 +305,7 @@ function startAlienShooting() {
     scoreEl.textContent = score;
   
     // Add to history
-    const key = `score_history_${currentUser}`;
+    const key = `score_history_${window.loggedInUser}`;
     const history = JSON.parse(localStorage.getItem(key)) || [];
     history.push(score);
 
