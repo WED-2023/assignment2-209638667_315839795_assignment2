@@ -103,10 +103,76 @@ body{
   text-shadow: 0 0 5px #00e5ff;
 }
 
+
+/* Login Form Container */
+#login {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 40px 20px;
+}
+
+/* Login Form */
+#login_form {
+  background-color: #111827;
+  padding: 30px 40px;
+  border-radius: 8px;
+  border: 2px solid #00e5ff;
+  box-shadow: 0 0 20px rgba(0, 229, 255, 0.2);
+  max-width: 400px;
+  width: 100%;
+}
+
+/* Labels and Inputs */
+#login_form label {
+  display: block;
+  margin-bottom: 6px;
+  color: #00e5ff;
+  font-weight: bold;
+}
+
+#login_form input {
+  width: 100%;
+  padding: 10px;
+  margin-bottom: 20px;
+  background-color: #0a0f1f;
+  border: 1px solid #00e5ff;
+  border-radius: 4px;
+  color: #ffffff;
+  font-family: 'Space Mono', monospace;
+}
+
+#login_form input:focus {
+  outline: none;
+  border-color: #0099ff;
+  box-shadow: 0 0 5px #00e5ff;
+}
+
+/* Submit Button */
+#login_form button[type="submit"] {
+  width: 100%;
+  padding: 12px;
+  background-color: #00e5ff;
+  color: #0a0f1f;
+  border: none;
+  border-radius: 4px;
+  font-weight: bold;
+  font-family: 'Space Mono', monospace;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+#login_form button[type="submit"]:hover {
+  background-color: #0099ff;
+}
+
 .hidden {
   display: none;
 }
 
+
+
+/* Game Styling */
 #game_screen {
   background-color: #111;
   width: 600px;
