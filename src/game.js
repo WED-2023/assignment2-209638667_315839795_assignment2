@@ -10,6 +10,10 @@ let score = 0;
 let lives = 3;
 let gameTimer;
 let timeRemaining;
+let alienDirection = 1;
+let alienSpeed = 2;
+let alienMoveInterval;
+let speedUps = 0;
 
 export function initGame(cfg) {
   config = cfg;
@@ -41,6 +45,7 @@ export function initGame(cfg) {
   requestAnimationFrame(updateMovement);
   spawnAliens();
   startTimer();
+  startAlienMovement();
 }
 
 function handleKeyDown(e) {
@@ -83,16 +88,23 @@ function updateUI() {
 }
 
 function startTimer() {
-  gameTimer = setInterval(() => {
-    timeRemaining--;
-    updateUI();
-    if (timeRemaining <= 0) {
-      clearInterval(gameTimer);
-      endGame('time');
-    }
-  }, 1000);
-}
-
+    gameTimer = setInterval(() => {
+      timeRemaining--;
+      updateUI();
+  
+      // Every 5 seconds, increase alien speed (up to 4x)
+      if (timeRemaining % 5 === 0 && speedUps < 4) {
+        alienSpeed += 0.5;
+        speedUps++;
+      }
+  
+      if (timeRemaining <= 0) {
+        clearInterval(gameTimer);
+        clearInterval(alienMoveInterval);
+        endGame('time');
+      }
+    }, 1000);
+  }
 function firePlayerBullet() {
   const bullet = document.createElement('img');
   bullet.src = 'assets/heart-svgrepo-com.svg';
@@ -118,24 +130,51 @@ function firePlayerBullet() {
 function spawnAliens() {
   const rows = 4;
   const cols = 5;
-  const spacingX = 80;
-  const spacingY = 60;
+  const spacingX = 70;
+  const spacingY = 50;
+  const rowColors = ['blue', 'green', 'orange', 'red'];
 
   for (let row = 0; row < rows; row++) {
     for (let col = 0; col < cols; col++) {
-        const alien = document.createElement('img');
-        alien.src = 'assets/alien_ship.svg';
-        alien.className = 'alien_ship';
-        alien.style.position = 'absolute';
-        alien.style.width = '50px';
-        alien.style.left = `${col * spacingX + 60}px`;
-        alien.style.top = `${row * spacingY + 50}px`;
-        const rowColors = ['blue', 'lime', 'red', 'purple']; // bottom to top (score: 5,10,15,20)
-        alien.dataset.row = row; // for scoring later
-        alien.style.filter = `drop-shadow(0 0 4px ${rowColors[row]})`;
-        gameArea.appendChild(alien);
+      const alien = document.createElement('img');
+      alien.src = 'assets/alien_ship.svg';
+      alien.className = 'alien_ship';
+      alien.dataset.row = row;
+      alien.style.position = 'absolute';
+      alien.style.width = '50px';
+      alien.style.left = `${col * spacingX + 60}px`;
+      alien.style.top = `${row * spacingY + 50}px`;
+      alien.style.filter = `drop-shadow(0 0 4px ${rowColors[row]})`;
+      gameArea.appendChild(alien);
     }
   }
+}
+
+function startAlienMovement() {
+  alienMoveInterval = setInterval(() => {
+    const aliens = Array.from(document.getElementsByClassName('alien_ship'));
+    if (aliens.length === 0) return;
+
+    let moveDown = false;
+    const bounds = aliens.map(a => a.getBoundingClientRect());
+    const leftMost = Math.min(...bounds.map(b => b.left));
+    const rightMost = Math.max(...bounds.map(b => b.right));
+
+    if (rightMost + alienSpeed >= gameArea.getBoundingClientRect().right ||
+        leftMost - alienSpeed <= gameArea.getBoundingClientRect().left) {
+      alienDirection *= -1;
+      moveDown = true;
+    }
+
+    aliens.forEach(alien => {
+      const currentLeft = parseInt(alien.style.left);
+      alien.style.left = `${currentLeft + alienSpeed * alienDirection}px`;
+      if (moveDown) {
+        const currentTop = parseInt(alien.style.top);
+        alien.style.top = `${currentTop + 10}px`;
+      }
+    });
+  }, 200);
 }
 
 function endGame(reason) {
