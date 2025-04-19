@@ -151,3 +151,22 @@ body{
   transform: translateX(-50%);
   transition: transform 0.1s ease;
 }
+
+#game_over_screen {
+  color: white;
+  text-align: center;
+  padding: 30px;
+  background-color: #111;
+  border: 2px solid #0ff;
+  border-radius: 10px;
+  width: 600px;
+  margin: 0 auto;
+  font-family: 'Space Mono', monospace;
+}
+
+#score_history {
+  list-style: none;
+  padding: 0;
+  color: #0f0;
+}
+

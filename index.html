@@ -43,7 +43,6 @@
                     <input type="text" id="signup_username" name="username" required>
                     <label for="signup_password">Password:</label>
                     <input type="password" id="signup_password" name="password" required>
-                    <!--TODO add password confirmation logic in JS-->
                     <label for="confirm_password">Confirm Password:</label>
                     <input type="password" id="confirm_password" name="confirm_password" required>
                     <label for="first_name">First Name:</label>
@@ -59,7 +58,6 @@
             </div>
             <div id="login" class="hidden">
                 <form id="login_form" action="">
-                    <!--TODO add login logic-->
                     <label for="login_username">Username:</label>
                     <input type="text" id="login_username" name="username" required>
                     <label for="login_password">Password:</label>
@@ -100,9 +98,17 @@
                   <img id="player_ship" src="assets/player_ship.svg" alt="Player Ship">
                 </div>
               </div>
+              <div id="game_over_screen" class="hidden">
+                <h2 id="game_result_message"></h2>
+                <p>Your score: <span id="final_score"></span></p>
+              
+                <h3>Score History</h3>
+                <ul id="score_history"></ul>
+              
+                <button id="new_game_button">New Game</button>
+              </div>
         </div>
         <div id="footer">
-            <hr>
             <p>Spaceships Game Project - Web Development course assignment2</p>
             <p>Contact: <a href="mailto:rothtom@post.bgu.ac.il">rothtom@post.bgu.ac.il</a> | <a href="mailto:maytalw@post.bgu.ac.il">maytalw@post.bgu.ac.il</a></p>
         </div>
