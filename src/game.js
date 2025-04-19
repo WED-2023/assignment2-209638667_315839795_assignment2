@@ -11,9 +11,11 @@ let lives = 3;
 let gameTimer;
 let timeRemaining;
 let alienDirection = 1;
-let alienSpeed = 2;
+let alienSpeed = 6;
 let alienMoveInterval;
 let speedUps = 0;
+let isGameOver = false;
+
 
 export function initGame(cfg) {
   config = cfg;
@@ -77,6 +79,7 @@ function updateMovement() {
   }
 
   requestAnimationFrame(updateMovement);
+  if (isGameOver) return;
 }
 
 function updateUI() {
@@ -104,33 +107,67 @@ function startTimer() {
         endGame('time');
       }
     }, 1000);
+    if (isGameOver) return;
   }
-function firePlayerBullet() {
-  const bullet = document.createElement('img');
-  bullet.src = 'assets/heart-svgrepo-com.svg';
-  bullet.className = 'player_bullet';
-  bullet.style.position = 'absolute';
-  bullet.style.left = `${playerShip.offsetLeft + playerShip.offsetWidth / 2 - 5}px`;
-  bullet.style.bottom = `${parseInt(playerShip.style.bottom) + 50}px`;
-  bullet.style.width = '15px';
-  bullet.style.filter = 'drop-shadow(0 0 5px red)';
-  gameArea.appendChild(bullet);
-
-  const interval = setInterval(() => {
-    const newBottom = parseInt(bullet.style.bottom) + 10;
-    if (newBottom > gameArea.offsetHeight) {
-      bullet.remove();
-      clearInterval(interval);
-    } else {
+  function firePlayerBullet() {
+    const bullet = document.createElement('img');
+    bullet.src = 'assets/heart-svgrepo-com.svg';
+    bullet.className = 'player_bullet';
+    bullet.style.position = 'absolute';
+    bullet.style.left = `${playerShip.offsetLeft + playerShip.offsetWidth / 2 - 5}px`;
+    bullet.style.bottom = `${parseInt(playerShip.style.bottom) + 50}px`;
+    bullet.style.width = '15px';
+    bullet.style.filter = 'drop-shadow(0 0 5px red)';
+    gameArea.appendChild(bullet);
+  
+    const interval = setInterval(() => {
+      const newBottom = parseInt(bullet.style.bottom) + 10;
+      if (newBottom > gameArea.offsetHeight) {
+        bullet.remove();
+        clearInterval(interval);
+        return;
+      }
       bullet.style.bottom = `${newBottom}px`;
-    }
-  }, 16);
-}
+  
+      // Collision check
+      const bulletRect = bullet.getBoundingClientRect();
+      const aliens = Array.from(document.getElementsByClassName('alien_ship'));
+      for (const alien of aliens) {
+        const alienRect = alien.getBoundingClientRect();
+        if (
+          bulletRect.left < alienRect.right &&
+          bulletRect.right > alienRect.left &&
+          bulletRect.top < alienRect.bottom &&
+          bulletRect.bottom > alienRect.top
+        ) {
+          const row = parseInt(alien.dataset.row);
+          const points = [5, 10, 15, 20][row];
+          score += points;
+          updateUI();
+          alien.remove();
+          bullet.remove();
+          clearInterval(interval);
+  
+          // Check if all aliens are dead
+          if (document.getElementsByClassName('alien_ship').length === 0) {
+            endGame('win');
+          }
+          return;
+        }
+        if (isGameOver) {
+            bullet.remove();
+            clearInterval(interval);
+            return;
+          }
+      }
+    }, 16);
+  }
+  
 
 function spawnAliens() {
   const rows = 4;
   const cols = 5;
-  const spacingX = 70;
+  const spacingX = 60;
   const spacingY = 50;
   const rowColors = ['blue', 'green', 'orange', 'red'];
 
@@ -178,6 +215,18 @@ function startAlienMovement() {
 }
 
 function endGame(reason) {
-  alert(reason === 'time' ? 'Time is up!' : 'You lost!');
-  // TODO: Show scoreboard, results, restart option
-}
+    isGameOver = true;
+    clearInterval(gameTimer);
+    clearInterval(alienMoveInterval);
+  
+    let message = '';
+    if (reason === 'time') {
+      message = score < 100 ? `You can do better! Score: ${score}` : 'Winner!';
+    } else if (reason === 'win') {
+      message = 'Champion!';
+    } else {
+      message = 'You Lost!';
+    }
+  
+    alert(message);
+  }
