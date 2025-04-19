@@ -16,21 +16,24 @@ let alienMoveInterval;
 let lastEnemyBullet = null;
 let speedUps = 0;
 let isGameOver = false;
+let alienShootingInterval; 
 
 
 export function initGame(cfg) {
     config = cfg;
     isGameOver = false;
-  
-    // ✅ Get fresh references after game area is reset
     gameArea = document.getElementById('game_area');
     playerShip = document.getElementById('player_ship');
-
-  // Reset stats
-  score = 0;
-  lives = 3;
-  timeRemaining = config.gameTime * 60; // in seconds
-  updateUI();
+    score = 0;
+    lives = 3;
+    timeRemaining = config.gameTime * 60;
+  
+    // ✅ reset game state
+    lastEnemyBullet = null;
+    speedUps = 0;
+    alienSpeed = 6;
+  
+    updateUI();
 
   // Style ship
   playerShip.style.filter = `drop-shadow(0 0 5px ${config.shipColor})`;
@@ -52,6 +55,7 @@ export function initGame(cfg) {
   spawnAliens();
   startTimer();
   startAlienMovement();
+  startAlienShooting();
 }
 
 function handleKeyDown(e) {
@@ -84,7 +88,7 @@ function updateMovement() {
 
   requestAnimationFrame(updateMovement);
   if (isGameOver) return;
-  startAlienShooting();
+  
 }
 
 function updateUI() {
@@ -220,7 +224,7 @@ function startAlienMovement() {
 }
 
 function startAlienShooting() {
-    setInterval(() => {
+    alienShootingInterval = setInterval(() => {
       if (isGameOver) return;
   
       // Only shoot if last bullet is 75% down or gone
@@ -255,9 +259,10 @@ function startAlienShooting() {
   
         const newTop = bullet.offsetTop + 6;
         if (newTop > gameArea.offsetHeight) {
-          bullet.remove();
-          clearInterval(interval);
-          return;
+            bullet.remove();
+            clearInterval(interval);
+            lastEnemyBullet = null;
+            return;
         }
   
         bullet.style.top = `${newTop}px`;
@@ -275,6 +280,7 @@ function startAlienShooting() {
           updateUI();
           bullet.remove();
           clearInterval(interval);
+          lastEnemyBullet = null;
           if (lives === 0) {
             endGame('lose');
           }
@@ -287,7 +293,7 @@ function startAlienShooting() {
     isGameOver = true;
     clearInterval(gameTimer);
     clearInterval(alienMoveInterval);
-  
+    clearInterval(alienShootingInterval);
     const messageEl = document.getElementById('game_result_message');
     const scoreEl = document.getElementById('final_score');
     const historyEl = document.getElementById('score_history');
@@ -345,4 +351,13 @@ function startAlienShooting() {
   
     // Reset internal flags just in case
     window.gameConfig = null;
+  });
+  // --- Restart Button ---
+    document.getElementById('restart_game_button').addEventListener('click', () => {
+    document.getElementById('game_over_screen').classList.add('hidden');
+    document.getElementById('game_area').innerHTML = `<img id="player_ship" src="assets/player_ship.svg" alt="Player Ship">`;
+  
+    // Reinitialize game with same config
+    document.getElementById('game_screen').classList.remove('hidden');
+    initGame(window.gameConfig);
   });
