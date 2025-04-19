@@ -13,6 +13,7 @@ let timeRemaining;
 let alienDirection = 1;
 let alienSpeed = 6;
 let alienMoveInterval;
+let lastEnemyBullet = null;
 let speedUps = 0;
 let isGameOver = false;
 
@@ -80,6 +81,7 @@ function updateMovement() {
 
   requestAnimationFrame(updateMovement);
   if (isGameOver) return;
+  startAlienShooting();
 }
 
 function updateUI() {
@@ -214,6 +216,70 @@ function startAlienMovement() {
   }, 200);
 }
 
+function startAlienShooting() {
+    setInterval(() => {
+      if (isGameOver) return;
+  
+      // Only shoot if last bullet is 75% down or gone
+      if (lastEnemyBullet) {
+        const b = lastEnemyBullet.getBoundingClientRect();
+        const area = gameArea.getBoundingClientRect();
+        const distance = b.top - area.top;
+        if (distance < area.height * 0.75) return;
+      }
+  
+      const aliens = Array.from(document.getElementsByClassName('alien_ship'));
+      if (aliens.length === 0) return;
+  
+      const randomAlien = aliens[Math.floor(Math.random() * aliens.length)];
+      const bullet = document.createElement('img');
+      bullet.src = 'assets/alien-gray-junk-svgrepo-com.svg';
+      bullet.className = 'enemy_bullet';
+      bullet.style.position = 'absolute';
+      bullet.style.width = '15px';
+      bullet.style.top = `${randomAlien.offsetTop + 30}px`;
+      bullet.style.left = `${randomAlien.offsetLeft + 20}px`;
+      bullet.style.filter = 'drop-shadow(0 0 5px lime)';
+      gameArea.appendChild(bullet);
+      lastEnemyBullet = bullet;
+  
+      const interval = setInterval(() => {
+        if (isGameOver) {
+          bullet.remove();
+          clearInterval(interval);
+          return;
+        }
+  
+        const newTop = bullet.offsetTop + 6;
+        if (newTop > gameArea.offsetHeight) {
+          bullet.remove();
+          clearInterval(interval);
+          return;
+        }
+  
+        bullet.style.top = `${newTop}px`;
+  
+        // Check collision with player
+        const bulletRect = bullet.getBoundingClientRect();
+        const playerRect = playerShip.getBoundingClientRect();
+        if (
+          bulletRect.left < playerRect.right &&
+          bulletRect.right > playerRect.left &&
+          bulletRect.top < playerRect.bottom &&
+          bulletRect.bottom > playerRect.top
+        ) {
+          lives--;
+          updateUI();
+          bullet.remove();
+          clearInterval(interval);
+          if (lives === 0) {
+            endGame('lose');
+          }
+        }
+      }, 16);
+    }, 800); // check every 0.8s for possible shot
+  }
+
 function endGame(reason) {
     isGameOver = true;
     clearInterval(gameTimer);
@@ -224,8 +290,9 @@ function endGame(reason) {
       message = score < 100 ? `You can do better! Score: ${score}` : 'Winner!';
     } else if (reason === 'win') {
       message = 'Champion!';
-    } else {
-      message = 'You Lost!';
+    } 
+    else if (reason === 'lose') {
+        message = 'You Lost!';
     }
   
     alert(message);
