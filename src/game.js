@@ -16,7 +16,14 @@ let alienMoveInterval;
 let lastEnemyBullet = null;
 let speedUps = 0;
 let isGameOver = false;
-let alienShootingInterval; 
+let alienShootingInterval;
+
+const bgMusic = new Audio('assets/audio/bg_music.mp3');
+bgMusic.loop = true;
+bgMusic.volume = 0.3; // optional: lower volume
+
+const hitAlienSound = new Audio('assets/audio/hit_alien.wav');
+const playerHitSound = new Audio('assets/audio/player_hit.wav');
 
 
 export function initGame(cfg) {
@@ -49,6 +56,10 @@ export function initGame(cfg) {
   // Listeners
   document.addEventListener('keydown', handleKeyDown);
   document.addEventListener('keyup', handleKeyUp);
+
+  // Start background music
+  bgMusic.currentTime = 0;
+  bgMusic.play();
 
   // Start game loop
   requestAnimationFrame(updateMovement);
@@ -153,6 +164,8 @@ function startTimer() {
           const points = [5, 10, 15, 20][row];
           score += points;
           updateUI();
+          hitAlienSound.currentTime = 0;
+          hitAlienSound.play();
           alien.remove();
           bullet.remove();
           clearInterval(interval);
@@ -276,6 +289,8 @@ function startAlienShooting() {
           bulletRect.top < playerRect.bottom &&
           bulletRect.bottom > playerRect.top
         ) {
+          playerHitSound.currentTime = 0;
+          playerHitSound.play();
           lives--;
           updateUI();
           bullet.remove();
@@ -333,6 +348,9 @@ function startAlienShooting() {
       const li = document.createElement('li');
       li.textContent = `Score: ${s}`;
       historyEl.appendChild(li);
+
+    // stop background music
+    bgMusic.pause();
     });
   
     // Hide game, show end screen
