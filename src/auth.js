@@ -13,8 +13,21 @@ const screens = {
   }
   
   // Button navigation
-  document.getElementById('login_button').addEventListener('click', () => showScreen('login'));
-  document.getElementById('signup_button').addEventListener('click', () => showScreen('signup'));
+  document.getElementById('link_signup').addEventListener('click', (e) => {
+    e.preventDefault();
+    showScreen('signup');
+  });
+  
+  document.getElementById('link_login').addEventListener('click', (e) => {
+    e.preventDefault();
+    showScreen('login');
+  });
+  
+  document.getElementById('open_about_link').addEventListener('click', (e) => {
+    e.preventDefault();
+    document.getElementById('about').classList.remove('hidden');
+  });
+  
   
   // Users DB
   const users = [
@@ -57,12 +70,88 @@ const screens = {
       return;
     }
   
-    // ✅ Reset history for new user
+    // Save user and clear score history
     window.loggedInUser = username;
-    const key = `score_history_${username}`;
-    localStorage.setItem(key, JSON.stringify([])); // Clear history on login
+    localStorage.setItem(`score_history_${username}`, JSON.stringify([]));
   
-    document.getElementById('menu').classList.remove('hidden');
     showScreen('config');
+
+    setLoginState(true);
+  });
+
+  document.getElementById('menu_logout_btn').addEventListener('click', () => {
+    alert('Logged out.');
+    setLoginState(false);
+    closeMenu();
+  });
+  
+  
+
+  function setLoginState(isLoggedIn) {
+    window.isLoggedIn = isLoggedIn;
+  
+    // Always refresh the menu to reflect login state
+    refreshMenuVisibility();
+  
+    if (!isLoggedIn) {
+      window.loggedInUser = null;
+      showScreen('welcome');
+    }
+  }
+
+  function refreshMenuVisibility() {
+    const isLoggedIn = window.isLoggedIn === true;
+    const currentScreen = [...document.querySelectorAll('#content > div')]
+      .find(div => !div.classList.contains('hidden'))?.id;
+  
+    const loginBtn = document.getElementById('menu_login');
+    const signupBtn = document.getElementById('menu_signup');
+    const logoutBtn = document.getElementById('menu_logout');
+    const gameBtn = document.getElementById('nav_game');
+    const configBtn = document.getElementById('nav_config');
+    const homeBtn = document.getElementById('nav_welcome');
+  
+    // Hide all first
+    loginBtn.classList.add('hidden');
+    signupBtn.classList.add('hidden');
+    logoutBtn.classList.add('hidden');
+    gameBtn.classList.add('hidden');
+    configBtn.classList.add('hidden');
+    homeBtn.classList.add('hidden');
+  
+    if (!isLoggedIn) {
+      loginBtn.classList.remove('hidden');
+      signupBtn.classList.remove('hidden');
+    } else {
+      if (currentScreen !== 'game_screen' && currentScreen !== 'config_screen') {
+        logoutBtn.classList.remove('hidden');
+        configBtn.classList.remove('hidden');
+      }
+      if (currentScreen !== 'welcome') {
+        homeBtn.classList.remove('hidden');
+      }
+    }
+  }
+
+  document.addEventListener('DOMContentLoaded', () => {
+    setLoginState(!!window.loggedInUser);
+  });
+  
+  
+  
+  document.addEventListener('DOMContentLoaded', () => {
+    setLoginState(!!window.loggedInUser);
+  
+    document.getElementById('switch_to_login')?.addEventListener('click', (e) => {
+      e.preventDefault();
+      showScreen('login');
+      refreshMenuVisibility();
+    });
+  
+    document.getElementById('switch_to_signup')?.addEventListener('click', (e) => {
+      e.preventDefault();
+      showScreen('signup');
+      refreshMenuVisibility();
+    });
   });
   

@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -8,37 +9,70 @@
     <link rel="stylesheet" href="styles.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Space+Mono:ital,wght@0,400;0,700;1,400;1,700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Space+Mono:ital,wght@0,400;0,700;1,400;1,700&display=swap"
+        rel="stylesheet">
 </head>
+
 <body>
     <div>
         <div id="header">
             <img src="assets/spaceship_header.svg" alt="Spaceships Logo" id="logo">
             <h1>Spaceships - The game</h1>
-        </div>
+            <button id="menu_toggle" aria-label="Toggle Menu">☰</button>
 
-          </header>
-        <nav id="menu" class="hidden">
+        </div>
+        <nav id="menu" class="sidebar hidden">
+
             <ul>
-                <!--TODO remove bullets-->
-                <li><button id="menu_config">Configuration</button></li>
-                <li><button id="menu_about">About</button></li>
-                <li><button id="menu_logout">Logout</button></li>
+                <li><button id="nav_welcome">Welcome</button></li>
+                <li><button id="nav_game">Game</button></li>
+                <li><button id="nav_config">Settings</button></li>
+                <li><button id="nav_about">About</button></li>
+                <li id="menu_login"><button id="menu_login_btn">Login</button></li>
+                <li id="menu_signup"><button id="menu_signup_btn">Sign Up</button></li>
+                <li id="menu_logout" class="hidden"><button id="menu_logout_btn">Logout</button></li>
             </ul>
         </nav>
+
         <div id="content">
             <div id="welcome">
-                <p>This spaceships game website was created by: </p>
-                <p>Tomer Rothman, id:315839795</p>
-                <p>May-tal Wexler Rothman, id: 209638667</p>
-                <a href="https://wed-2023.github.io/assignment2-209638667_315839795_assignment2/" target="_blank">Link to the spaceships game</a>
-                <button id="login_button">Login</button>
-                <button id="signup_button">Sign Up</button>
-                <button id="open_about_btn">About</button>
+                <h2>Welcome to the best spaceships game!</h2>
 
+                <div class="welcome-meta-group">
+                    <p class="welcome-meta">This website was created by:</p>
+                    <p class="welcome-meta">Tomer Rothman, id: 315839795</p>
+                    <p class="welcome-meta">May-tal Wexler Rothman, id: 209638667</p>
+                </div>
+
+                <button id="welcome_play_btn" class="welcome-play-btn">Play Now</button>
+
+                <div class="welcome-actions-group">
+                    <p class="welcome-action">To play the Spaceships Game, please <a href="#" id="link_signup">sign
+                            up</a>.</p>
+                    <p class="welcome-action">Already a user? Please <a href="#" id="link_login">login</a>.</p>
+                    <p class="welcome-action">To learn more about this game, click <a href="#"
+                            id="open_about_link">here</a>.</p>
+                    <p class="welcome-action">
+                        To share this game with your friends, send them this
+                        <a href="https://wed-2023.github.io/assignment2-209638667_315839795_assignment2/"
+                            target="_blank" class="welcome-share-link">link</a>.
+                    </p>
+                </div>
             </div>
+
+
             <div id="signup" class="hidden">
+
                 <form id="signup_form" action="">
+                    <div class="form-header">
+                    <h2>Signup</h2>
+                    <button class="home-btn" id="home_from_signup" title="Go back to the home page">
+                        <svg id="home_icon" class="home-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"
+                            fill="currentColor">
+                            <path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z" />
+                        </svg>
+                    </button>
+                </div>
                     <label for="signup_username">Username:</label>
                     <input type="text" id="signup_username" name="username" required>
                     <label for="signup_password">Password:</label>
@@ -54,64 +88,86 @@
                     <label for="birth_date">Birth Date:</label>
                     <input type="date" id="birth_date" name="birth_date" required>
                     <button type="submit">Sign Up</button>
+                    <p class="form-bottom-action">
+                        Already a user? Please <a href="#" id="switch_to_login">login</a>.
+                      </p>
+                      
                 </form>
             </div>
             <div id="login" class="hidden">
                 <form id="login_form" action="">
+                    <div class="form-header">
+                        <h2>Login</h2>
+                    <button class="home-btn" id="home_from_login" title="Go back to the home page">
+                        <svg id="home_icon" class="home-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"
+                            fill="currentColor">
+                            <path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z" />
+                        </svg>
+                    </button>
+                </div>
                     <label for="login_username">Username:</label>
                     <input type="text" id="login_username" name="username" required>
                     <label for="login_password">Password:</label>
                     <input type="password" id="login_password" name="password" required>
                     <button type="submit">Login</button>
+                    <p class="form-bottom-action">
+                        Don't have a user? Please <a href="#" id="switch_to_signup">sign up</a>.
+                      </p>
+                      
                 </form>
             </div>
             <div id="config_screen" class="hidden">
                 <h2>Game Configuration</h2>
                 <form id="config_form">
-                    <!-- Shooting key selection -->
-                    <label for="shoot_key">Choose your shooting key:</label>
-                    <div id="shoot_key_display">Not set</div>
-                    <button type="button" id="set_shoot_key_btn">Press a key</button>
-                    <input type="hidden" id="shoot_key" name="shoot_key" required>
+                    <!-- Shooting key -->
+                    <div class="config_row">
+                        <label for="shoot_key">Shooting Key:</label>
+                        <input type="text" id="shoot_key" name="shoot_key" placeholder="Press a key" required readonly>
+                    </div>
 
-            
-                    <!-- Game duration -->
-                    <label for="game_time">Game duration (in minutes):</label>
-                    <input type="number" id="game_time" name="game_time" min="2" max="20" required>
-            
-                    <!-- Spaceship color -->
-                    <label for="ship_color">Choose your spaceship color:</label>
-                    <input type="color" id="ship_color" name="ship_color" value="#00ff00">
-            
-                    <!-- Start button -->
+
+                    <!-- Game time -->
+                    <div class="config_row">
+                        <label for="game_time">Game Time (minutes):</label>
+                        <input type="number" id="game_time" name="game_time" min="2" max="20" required>
+                    </div>
+
+                    <!-- Color -->
+                    <div class="config_row">
+                        <label for="ship_color">Ship Color:</label>
+                        <input type="color" id="ship_color" name="ship_color" value="#00ff00">
+                    </div>
+
+                    <!-- Start -->
                     <button type="submit">Start Game</button>
                 </form>
             </div>
             <div id="game_screen" class="hidden">
                 <div id="game_info">
-                  <span id="score">Score: 0</span>
-                  <span id="lives">Lives: 3</span>
-                  <span id="timer">Time: 00:00</span>
+                    <span id="score">Score: 0</span>
+                    <span id="lives">Lives: 3</span>
+                    <span id="timer">Time: 00:00</span>
                 </div>
                 <div id="game_area">
-                  <!-- Ships and bullets will be added dynamically via JS -->
-                  <img id="player_ship" src="assets/player_ship.svg" alt="Player Ship">
+                    <!-- Ships and bullets will be added dynamically via JS -->
+                    <img id="player_ship" src="assets/player_ship.svg" alt="Player Ship">
                 </div>
-              </div>
-              <div id="game_over_screen" class="hidden">
+            </div>
+            <div id="game_over_screen" class="hidden">
                 <h2 id="game_result_message"></h2>
                 <p>Your score: <span id="final_score"></span></p>
-              
+
                 <h3>Score History</h3>
                 <ul id="score_history"></ul>
-              
+
                 <button id="restart_game_button">Restart</button>
                 <button id="new_game_button">New Game</button>
-              </div>
+            </div>
         </div>
         <div id="footer">
             <p>Spaceships Game Project - Web Development course assignment2</p>
-            <p>Contact: <a href="mailto:rothtom@post.bgu.ac.il">rothtom@post.bgu.ac.il</a> | <a href="mailto:maytalw@post.bgu.ac.il">maytalw@post.bgu.ac.il</a></p>
+            <p>Contact: <a href="mailto:rothtom@post.bgu.ac.il">rothtom@post.bgu.ac.il</a> | <a
+                    href="mailto:maytalw@post.bgu.ac.il">maytalw@post.bgu.ac.il</a></p>
         </div>
         <div id="about" class="modal hidden">
             <div class="modal-content">
@@ -126,4 +182,5 @@
     </div>
     <script type="module" src="src/main.js"></script>
 </body>
+
 </html>

@@ -8,9 +8,9 @@ const shootKeyInput = document.getElementById('shoot_key');
 const gameScreen = document.getElementById('game_screen');
 
 // --- Shooting Key Logic ---
-shootKeyBtn.addEventListener('click', () => {
-  shootKeyDisplay.textContent = 'Press any key...';
-  shootKeyBtn.disabled = true;
+
+shootKeyInput.addEventListener('focus', () => {
+  shootKeyInput.placeholder = 'Press any key...';
 
   const keyListener = (event) => {
     const key = event.key;
@@ -20,16 +20,18 @@ shootKeyBtn.addEventListener('click', () => {
     if (isLetter || isSpace) {
       const finalKey = isSpace ? 'Space' : key.toUpperCase();
       shootKeyInput.value = finalKey;
-      shootKeyDisplay.textContent = `Selected key: ${finalKey}`;
+      shootKeyInput.placeholder = 'Press a key';
       document.removeEventListener('keydown', keyListener);
-      shootKeyBtn.disabled = false;
+      shootKeyInput.blur(); // Remove focus after choosing key
     } else {
-      shootKeyDisplay.textContent = 'Only letters or Space are allowed. Try again.';
+      shootKeyInput.value = '';
+      shootKeyInput.placeholder = 'Only letters or Space. Try again.';
     }
   };
 
   document.addEventListener('keydown', keyListener);
 });
+
 
 // --- Submit and Start Game ---
 configForm.addEventListener('submit', (e) => {

@@ -6,6 +6,7 @@ body{
   background-color: #0a0f1f;
   color: #ffffff;
   line-height: 1.6;
+  overflow-y: scroll;
 }
 
 
@@ -26,6 +27,7 @@ body{
 #logo {
   height: 80px;
   width: auto;
+  cursor: pointer;
 }
 
 /* Title Text Styling */
@@ -62,57 +64,207 @@ body{
   font-style: italic;
 }
 
-/* Welcome Section Container */
-#welcome {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  padding: 60px 20px;
-  text-align: center;
-}
-
-/* Welcome Text Styling */
-#welcome p {
-  margin: 10px 0;
-  font-size: 1.1rem;
-  color: #cccccc;
-}
-
-/* Link to the Game */
-#welcome a {
+/* Menu bar */
+/* Hamburger button */
+#menu_toggle {
+  background: none;
+  border: none;
+  font-size: 2rem;
   color: #00e5ff;
-  text-decoration: underline;
-  margin: 20px 0;
-  font-weight: bold;
-  display: inline-block;
+  cursor: pointer;
+  margin-left: auto;
   transition: color 0.3s;
+  z-index: 1100;
+  position: relative; 
 }
 
-#welcome a:hover {
+
+#menu_toggle:hover {
   color: #0099ff;
 }
 
-/* Welcome Buttons */
-#welcome button {
-  margin: 10px;
-  padding: 12px 24px;
+/* Sidebar menu styling */
+#menu.sidebar {
+  position: fixed;
+  top: 0;
+  right: 0;
+  left: auto;
+  height: 100%;
+  width: 240px;
+  background-color: #0a0f1f;
+  border-right: none;
+  border-left: 2px solid #00e5ff;
+  box-shadow: -4px 0 10px rgba(0, 229, 255, 0.2);
+  padding: 20px;
+  transform: translateX(100%);
+  transition: transform 0.3s ease;
+  z-index: 1000;
+  will-change: transform;
+}
+
+#menu.sidebar.active {
+  transform: translateX(0);
+}
+
+#menu.sidebar ul {
+  list-style: none;
+  padding: 100px 0 0 0;
+  margin: 0;
+}
+
+
+#menu.sidebar li {
+  margin-bottom: 16px;
+}
+
+#menu.sidebar button {
+  width: 100%;
+  padding: 12px;
   background-color: #00e5ff;
   color: #0a0f1f;
   font-family: 'Space Mono', monospace;
-  font-weight: bold;
   font-size: 1rem;
   border: none;
   border-radius: 6px;
   cursor: pointer;
   box-shadow: 0 0 10px rgba(0, 229, 255, 0.3);
-  transition: background-color 0.3s, transform 0.2s;
+  transition: background-color 0.3s;
 }
 
-#welcome button:hover {
+#menu.sidebar button:hover {
+  background-color: #0099ff;
+}
+
+
+/********************************************************************Welcome Section START********************************************************************/
+#welcome {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 40px 20px;
+  text-align: center;
+}
+
+/* Header */
+#welcome h2 {
+  font-size: 2rem;
+  color: #00e5ff;
+  text-shadow: 0 0 10px #0099ff;
+  margin-bottom: 20px;
+}
+
+/* Creator info block */
+.welcome-meta-group {
+  margin-bottom: 16px;
+}
+
+.welcome-meta {
+  font-size: 0.95rem;
+  color: #cccccc;
+  margin: 4px 0;
+}
+
+/* Login/signup/about/share block */
+.welcome-actions-group {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.welcome-action {
+  font-size: 0.75rem;
+  color: #aaaaaa;
+  line-height: 1.3;
+  margin: 0;
+}
+
+.welcome-action a,
+.welcome-share-link {
+  color: #00e5ff;
+  font-weight: bold;
+  text-decoration: underline;
+}
+
+.welcome-action a:hover,
+.welcome-share-link:hover {
+  color: #0099ff;
+}
+
+.welcome-play-btn {
+  padding: 16px 36px;
+  background-color: #00e5ff;
+  color: #0a0f1f;
+  border: none;
+  border-radius: 8px;
+  font-size: 1.2rem;
+  font-weight: bold;
+  font-family: 'Space Mono', monospace;
+  cursor: pointer;
+  box-shadow: 0 0 15px rgba(0, 229, 255, 0.4);
+  margin: 16px 0 24px;
+  transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+.welcome-play-btn:hover {
   background-color: #0099ff;
   transform: scale(1.05);
 }
+
+/********************************************************************Welcome Section END********************************************************************/
+
+/********************************************************************Login and Signup form START********************************************************************/
+.form-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 10px;
+}
+
+.form-header h2 {
+  color: #00e5ff;
+  font-size: 1.5rem;
+  margin: 0;
+}
+
+.home-btn {
+  background: none;
+  border: none;
+  padding: 0;
+  cursor: pointer;
+  color: #00e5ff;
+  transition: color 0.3s;
+}
+
+.home-btn:hover {
+  color: #0099ff;
+}
+
+.home-icon {
+  width: 24px;
+  height: 24px;
+  fill: currentColor;
+}
+
+.form-bottom-action {
+  text-align: center;
+  font-size: 0.85rem;
+  color: #aaaaaa;
+  margin-top: 16px;
+}
+
+.form-bottom-action a {
+  color: #00e5ff;
+  text-decoration: underline;
+  font-weight: bold;
+}
+
+.form-bottom-action a:hover {
+  color: #0099ff;
+}
+
+/********************************************************************Login and Signup form END********************************************************************/
+
 
 
 /*Modal Window - About section*/
@@ -285,6 +437,120 @@ body{
   display: none !important;
 }
 
+/* Game Configuration Screen */
+#config_screen {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 60px 20px;
+}
+
+/* Form box */
+#config_form {
+  background-color: #111827;
+  border: 2px solid #00e5ff;
+  border-radius: 8px;
+  padding: 30px;
+  max-width: 500px;
+  width: 100%;
+  box-shadow: 0 0 20px rgba(0, 229, 255, 0.2);
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+/* Title outside the box */
+#config_screen h2 {
+  margin-bottom: 20px;
+  font-size: 2rem;
+  color: #00e5ff;
+  text-shadow: 0 0 8px #0099ff;
+  font-family: 'Space Mono', monospace;
+  text-align: center;
+}
+
+/* Inline form groups */
+#config_form label {
+  color: #00e5ff;
+  font-weight: bold;
+  margin-right: 10px;
+  white-space: nowrap;
+  font-size: 1rem;
+}
+
+.config_row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+/* Inputs */
+/* Text-based inputs */
+#config_form input[type="number"],
+#config_form input[type="text"] {
+  flex: 1;
+  padding: 8px;
+  background-color: #0a0f1f;
+  border: 1px solid #00e5ff;
+  border-radius: 4px;
+  color: white;
+  font-family: 'Space Mono', monospace;
+}
+
+/* Color input smaller */
+#config_form input[type="color"] {
+  width: 50px;
+  height: 40px;
+  border: none;
+  background: none;
+  padding: 0;
+}
+
+#config_form input:focus {
+  outline: none;
+  border-color: #0099ff;
+  box-shadow: 0 0 5px #00e5ff;
+}
+
+/* Shoot key display box */
+#shoot_key_display {
+  flex: 1;
+  text-align: center;
+  padding: 8px;
+  background-color: #0a0f1f;
+  color: #ffffff;
+  border: 1px dashed #00e5ff;
+  border-radius: 4px;
+  font-family: 'Space Mono', monospace;
+}
+
+/* Buttons */
+#config_form button {
+  padding: 12px;
+  background-color: #00e5ff;
+  color: #0a0f1f;
+  border: none;
+  border-radius: 6px;
+  font-weight: bold;
+  font-family: 'Space Mono', monospace;
+  cursor: pointer;
+  transition: background-color 0.3s ease, transform 0.2s ease;
+  box-shadow: 0 0 10px rgba(0, 229, 255, 0.3);
+  margin-top: 10px;
+  width: 100%;
+}
+
+#config_form button:hover {
+  background-color: #0099ff;
+  transform: scale(1.03);
+}
+
+#config_form > * {
+  margin-bottom: 16px;
+}
+
 
 
 /* Game Styling */
@@ -381,3 +647,14 @@ body{
   color: #0f0;
 }
 
+#welcome .welcome-action {
+  font-size: 0.85rem;
+  margin: 2px 0 !important;
+  line-height: 1.3;
+  color: #aaaaaa;
+}
+
+#welcome .welcome-link {
+  font-size: 0.9rem;
+  margin: 4px 0 12px;
+}
