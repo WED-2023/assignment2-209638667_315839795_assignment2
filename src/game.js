@@ -17,6 +17,10 @@ let lastEnemyBullet = null;
 let speedUps = 0;
 let isGameOver = false;
 let alienShootingInterval;
+let paused = false;
+let lastShotTime = 0;
+const shotCooldown = 300; // in ms
+
 
 const bgMusic = new Audio('assets/audio/bg_music.mp3');
 bgMusic.loop = true;
@@ -70,6 +74,7 @@ export function initGame(cfg) {
 }
 
 function handleKeyDown(e) {
+  if (paused || isGameOver) return;
   switch (e.key) {
     case 'ArrowLeft': moveX = -speed; break;
     case 'ArrowRight': moveX = speed; break;
@@ -111,6 +116,7 @@ function updateUI() {
 }
 
 function startTimer() {
+  clearInterval(gameTimer); // 🧼 prevent duplicates
     gameTimer = setInterval(() => {
       timeRemaining--;
       updateUI();
@@ -130,6 +136,9 @@ function startTimer() {
     if (isGameOver) return;
   }
   function firePlayerBullet() {
+    const now = Date.now();
+    if (now - lastShotTime < shotCooldown || paused || isGameOver) return;
+    lastShotTime = now;
     const bullet = document.createElement('img');
     bullet.src = 'assets/player_shot.svg';
     bullet.className = 'player_bullet';
@@ -269,7 +278,7 @@ function startAlienShooting() {
           clearInterval(interval);
           return;
         }
-  
+        if (paused) return;
         const newTop = bullet.offsetTop + 6;
         if (newTop > gameArea.offsetHeight) {
             bullet.remove();
@@ -386,4 +395,26 @@ function startAlienShooting() {
     bgMusic.pause();
     bgMusic.currentTime = 0;
   }
+
+  export function pauseGame() {
+    if (paused || isGameOver) return;
+    paused = true;
+  
+    clearInterval(gameTimer);
+    clearInterval(alienMoveInterval);
+    clearInterval(alienShootingInterval);
+  }
+  
+  export function resumeGame() {
+    if (!paused || isGameOver) return;
+    paused = false;
+  
+    // Resume timer
+    startTimer();
+    startAlienMovement();
+    startAlienShooting();
+  
+    // Player movement continues via requestAnimationFrame loop
+  }
+  
   

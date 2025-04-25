@@ -1,26 +1,32 @@
-import { stopGameMusic } from './game.js';
+import { stopGameMusic, pauseGame, resumeGame } from './game.js';
 const menuToggle = document.getElementById('menu_toggle');
 const menu = document.getElementById('menu');
 
-// 👉 OPEN: Remove 'hidden', then wait a frame before adding 'active'
+// open menu button
 function openMenu() {
-    // Fire a global event to notify that the menu has opened
-    document.dispatchEvent(new Event('menuOpened'));
-  
-    // Then open the sidebar
-    menu.classList.remove('hidden');
-    requestAnimationFrame(() => {
-      menu.classList.add('active');
-    });
+  document.dispatchEvent(new Event('menuOpened'));
+
+  if (!document.getElementById('game_screen').classList.contains('hidden')) {
+    pauseGame();
   }
+
+  menu.classList.remove('hidden');
+  requestAnimationFrame(() => {
+    menu.classList.add('active');
+  });
+}
   
 
-// 👉 CLOSE: Remove 'active', then wait for transition before hiding
+// close menu button
 function closeMenu() {
   menu.classList.remove('active');
   setTimeout(() => {
     menu.classList.add('hidden');
-  }, 300); // should match the CSS transition duration
+
+    if (!document.getElementById('game_screen').classList.contains('hidden')) {
+      resumeGame();
+    }
+  }, 300); // match CSS transition
 }
 
 // 👉 Toggle logic
