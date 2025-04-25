@@ -344,14 +344,16 @@ function startAlienShooting() {
   
     // Display history
     historyEl.innerHTML = '';
-    [...history].reverse().slice(0, 10).forEach(s => {
+    history.slice(0, 10).forEach((s, index) => {
       const li = document.createElement('li');
-      li.textContent = `Score: ${s}`;
+      li.textContent = `#${index + 1}: Score ${s}`;
+      if (s === score) {
+        li.classList.add('current-score');
+      }
       historyEl.appendChild(li);
-
-    // stop background music
-    bgMusic.pause();
-    });
+        // stop background music
+        bgMusic.pause();
+      });
   
     // Hide game, show end screen
     document.getElementById('game_screen').classList.add('hidden');
