@@ -6,7 +6,9 @@ body{
   background-color: #0a0f1f;
   color: #ffffff;
   line-height: 1.6;
-  overflow-y: scroll;
+  overflow-y: auto;
+  overflow-x: hidden;
+  overflow: hidden;
 }
 
 .hidden {
@@ -38,6 +40,8 @@ body{
   font-weight: 700;
   font-style: italic;
 }
+
+
 
 
 /********************************************************************General Style END********************************************************************/
@@ -609,7 +613,7 @@ body{
   transition: transform 0.1s ease;
 }
 
-/* Footer Styling */
+/********************************************************************Footer START********************************************************************/
 #footer {
   text-align: center;
   padding: 20px;
@@ -618,7 +622,6 @@ body{
   font-size: 0.9rem;
   border-top: 2px solid #00e5ff;
   box-shadow: 0 -4px 10px rgba(0, 229, 255, 0.2);
-  margin-top: 40px;
 }
 
 /* Footer Links */
@@ -638,6 +641,8 @@ body{
   border-top: 1px solid #00e5ff;
   margin-bottom: 10px;
 }
+
+/********************************************************************Footer END********************************************************************/
 
 #game_over_screen {
   color: white;
@@ -673,3 +678,56 @@ body{
   font-size: 0.9rem;
   margin: 4px 0 12px;
 }
+
+html, body {
+  height: 100%;
+  margin: 0;
+  padding: 0;
+}
+
+#page_wrapper {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+#content {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+
+/********************************************************************Minimum Screen Resolution Support START********************************************************************/
+@media screen and (max-width: 1365px), screen and (max-height: 767px) {
+  body {
+    overflow-y: auto;
+  }
+
+  #welcome {
+    padding: 20px;
+  }
+
+  #header h1 {
+    font-size: 2rem;
+  }
+
+  .welcome-play-btn {
+    padding: 12px 24px;
+    font-size: 1rem;
+  }
+
+  #game_screen {
+    width: 100%;
+    height: auto;
+  }
+
+  #footer {
+    padding: 16px;
+    font-size: 0.8rem;
+  }
+}
+
+/********************************************************************Minimum Screen Resolution Support END********************************************************************/
