@@ -1,4 +1,4 @@
-/*General*/
+/********************************************************************General Style START********************************************************************/
 body{
   margin: 0;
   padding: 0;
@@ -9,9 +9,41 @@ body{
   overflow-y: scroll;
 }
 
+.hidden {
+  display: none !important;
+}
 
 
-/* Header Container */
+/*Google Fonts*/
+.space-mono-regular {
+  font-family: "Space Mono", monospace;
+  font-weight: 400;
+  font-style: normal;
+}
+
+.space-mono-bold {
+  font-family: "Space Mono", monospace;
+  font-weight: 700;
+  font-style: normal;
+}
+
+.space-mono-regular-italic {
+  font-family: "Space Mono", monospace;
+  font-weight: 400;
+  font-style: italic;
+}
+
+.space-mono-bold-italic {
+  font-family: "Space Mono", monospace;
+  font-weight: 700;
+  font-style: italic;
+}
+
+
+/********************************************************************General Style END********************************************************************/
+
+/********************************************************************Header START********************************************************************/
+
 #header {
   display: flex;
   align-items: center;
@@ -39,33 +71,10 @@ body{
   text-shadow: 0 0 10px #0099ff;
 }
 
-/*Google Fonts*/
-.space-mono-regular {
-  font-family: "Space Mono", monospace;
-  font-weight: 400;
-  font-style: normal;
-}
+/********************************************************************Header END********************************************************************/
 
-.space-mono-bold {
-  font-family: "Space Mono", monospace;
-  font-weight: 700;
-  font-style: normal;
-}
+/********************************************************************Menu START********************************************************************/
 
-.space-mono-regular-italic {
-  font-family: "Space Mono", monospace;
-  font-weight: 400;
-  font-style: italic;
-}
-
-.space-mono-bold-italic {
-  font-family: "Space Mono", monospace;
-  font-weight: 700;
-  font-style: italic;
-}
-
-/* Menu bar */
-/* Hamburger button */
 #menu_toggle {
   background: none;
   border: none;
@@ -135,8 +144,10 @@ body{
   background-color: #0099ff;
 }
 
+/********************************************************************Menu END********************************************************************/
 
-/********************************************************************Welcome Section START********************************************************************/
+
+/********************************************************************Welcome START********************************************************************/
 #welcome {
   display: flex;
   flex-direction: column;
@@ -146,7 +157,6 @@ body{
   text-align: center;
 }
 
-/* Header */
 #welcome h2 {
   font-size: 2rem;
   color: #00e5ff;
@@ -154,7 +164,7 @@ body{
   margin-bottom: 20px;
 }
 
-/* Creator info block */
+
 .welcome-meta-group {
   margin-bottom: 16px;
 }
@@ -165,7 +175,6 @@ body{
   margin: 4px 0;
 }
 
-/* Login/signup/about/share block */
 .welcome-actions-group {
   display: flex;
   flex-direction: column;
@@ -211,9 +220,9 @@ body{
   transform: scale(1.05);
 }
 
-/********************************************************************Welcome Section END********************************************************************/
+/********************************************************************Welcome END********************************************************************/
 
-/********************************************************************Login and Signup form START********************************************************************/
+/********************************************************************Login and Signup START********************************************************************/
 .form-header {
   display: flex;
   justify-content: space-between;
@@ -263,9 +272,10 @@ body{
   color: #0099ff;
 }
 
-/********************************************************************Login and Signup form END********************************************************************/
+/********************************************************************Login and Signup END********************************************************************/
 
 
+/********************************************************************Modal Window START********************************************************************/
 
 /*Modal Window - About section*/
 .modal {
@@ -291,6 +301,8 @@ body{
   box-shadow: 0 0 20px #00e5ff;
   position: relative;
 }
+
+/********************************************************************Modal Window END********************************************************************/
 
 .close-btn {
   position: absolute;
@@ -433,9 +445,7 @@ body{
   background-color: #0099ff;
 }
 
-.hidden {
-  display: none !important;
-}
+
 
 /* Game Configuration Screen */
 #config_screen {
