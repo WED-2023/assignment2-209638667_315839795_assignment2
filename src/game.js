@@ -379,3 +379,9 @@ function startAlienShooting() {
     document.getElementById('game_screen').classList.remove('hidden');
     initGame(window.gameConfig);
   });
+
+  export function stopGameMusic() {
+    bgMusic.pause();
+    bgMusic.currentTime = 0;
+  }
+  

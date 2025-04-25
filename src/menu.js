@@ -1,3 +1,4 @@
+import { stopGameMusic } from './game.js';
 const menuToggle = document.getElementById('menu_toggle');
 const menu = document.getElementById('menu');
 
@@ -42,6 +43,12 @@ document.addEventListener('keydown', (e) => {
   
   // Click any menu button → close sidebar
   function showOnly(id) {
+    // Stop music when leaving game screen
+    const gameScreenIsVisible = !document.getElementById('game_screen')?.classList.contains('hidden');
+    if (gameScreenIsVisible && id !== 'game_screen') {
+      stopGameMusic();
+    }
+  
     document.querySelectorAll('#content > div').forEach(div => {
       div.classList.add('hidden');
     });
