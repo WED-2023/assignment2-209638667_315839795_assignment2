@@ -150,6 +150,30 @@ body{
 
 /********************************************************************Menu END********************************************************************/
 
+/********************************************************************Pause Overlay START********************************************************************/
+#pause_overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(10, 15, 31, 0.8); /* semi-transparent dark */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000; /* on top of everything */
+}
+
+#pause_message {
+  font-size: 2.5rem;
+  color: #00e5ff;
+  text-shadow: 0 0 10px #00e5ff;
+  font-family: 'Space Mono', monospace;
+  font-weight: bold;
+}
+
+/********************************************************************Pause Overlay END********************************************************************/
+
 
 /********************************************************************Welcome START********************************************************************/
 #welcome {

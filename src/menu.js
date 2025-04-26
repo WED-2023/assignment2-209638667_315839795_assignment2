@@ -8,6 +8,7 @@ function openMenu() {
 
   if (!document.getElementById('game_screen').classList.contains('hidden')) {
     pauseGame();
+    document.getElementById('pause_overlay').classList.remove('hidden');
   }
 
   menu.classList.remove('hidden');
@@ -25,6 +26,7 @@ function closeMenu() {
 
     if (!document.getElementById('game_screen').classList.contains('hidden')) {
       resumeGame();
+      document.getElementById('pause_overlay').classList.add('hidden');
     }
   }, 300); // match CSS transition
 }
